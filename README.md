@@ -12,7 +12,7 @@ Add the package to your `app.module.ts`.
 Then add property `yaCounterId` to the `environment` constant
 
 ```ts
-import { NgxMetrikaModule } from 'ngx-metrika';
+import { NgxMetrikaModule } from '@kolkov/ngx-metrika';
 
 @NgModule({
   imports: [
@@ -27,21 +27,21 @@ The package will listen to route changes by default, you just need to instantiat
 
 ```ts
 export class AppComponent {
-  constructor(ngxMetrikaService: NgxMetrikaService) { }
+  constructor(private ym: NgxMetrikaService) { }
 }
 ```
 
 NgxMetrika is a service that also allows you to track pageviews manually. 
 
 ```ts
-ngxMetrikaService.hit();
+this.ym.hit.emit();
 
 // or with custom params
 
-ngxMetrikaService.hit(url: '/custom'{
+this.ym.hit.emit({url: '/custom',{
   title: 'Lesson Feed',  
   referer: 'https://angularfirebase.com/lessons'
-});
+}});
 ```
 
 ## Target
@@ -49,18 +49,18 @@ ngxMetrikaService.hit(url: '/custom'{
 [Target](https://yandex.ru/support/metrika/objects/reachgoal.html) expect an action. 
 
 ```ts
-ngxMetrikaService.reachGoal('TARGET_NAME')
+this.ym.reachGoal.emit({'TARGET_NAME'})
 ```
 
 You can optionally pass in addtional params.
 
 
 ```ts
-ngxMetrikaService.reachGoal('login', { 
+this.ym.reachGoal.emit({'login', { 
   method: 'Instagram',
   event_category: 'engagemnt',
   event_label: 'New user logged in via OAuth'
-});
+}});
 ```
 
 
