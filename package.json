@@ -1,6 +1,6 @@
 {
   "name": "@kolkov/ngx-metrika",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "author": "Andrey Kolkov <a.kolkov@gmail.com>",
   "repository": "https://github.com/kolkov/ngx-metrika",
   "license": "MIT",
@@ -13,6 +13,7 @@
   "keywords": [
     "angular",
     "yandex metrika",
-    "tag.js"
+    "tag.js",
+    "яндекс метрика"
   ]
 }

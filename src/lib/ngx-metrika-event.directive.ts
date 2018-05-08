@@ -1,5 +1,6 @@
 import { NgxMetrikaService } from './ngx-metrika.service';
 import {AfterViewInit, Directive, ElementRef, Input, Renderer2} from "@angular/core";
+import {MetrikaGoalOptions, MetrikaHitEventOptions} from "./interfaces";
 
 @Directive({
   selector: '[ymEvent]'
@@ -19,10 +20,14 @@ export class NgxMetrikaEventDirective implements AfterViewInit {
   ngAfterViewInit() {
     try {
       this.renderer.listen(this.el.nativeElement, this.trackOn, () => {
-        this.ym.reachGoal(this.action || this.trackOn, {
-          event_category: this.category,
-          ...this.params
-        });
+        let goalOptions: MetrikaGoalOptions = {
+          type: this.action || this.trackOn,
+          commonOptions: {
+            event_category: this.category,
+            ...this.params
+          }
+        };
+        this.ym.reachGoal.emit(goalOptions);
       });
     } catch (err) {
       console.error(err);

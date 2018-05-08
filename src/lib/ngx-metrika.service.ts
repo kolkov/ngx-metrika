@@ -1,6 +1,12 @@
-import {Inject, Injectable} from '@angular/core';
+import {EventEmitter, Inject, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
-import {CommonOptions, MetrikaHitOptions, NgxMetrikaConfig} from "./interfaces";
+import {
+  CommonOptions,
+  MetrikaGoalOptions,
+  MetrikaHitEventOptions,
+  MetrikaHitOptions,
+  NgxMetrikaConfig
+} from "./interfaces";
 import {filter, tap} from "rxjs/operators";
 import {YM_CONFIG} from "./ym.token";
 
@@ -11,24 +17,42 @@ declare var Ya: any;
 })
 export class NgxMetrikaService {
   previousUrl: string;
+  private renderer: Renderer2;
+
+  hit = new EventEmitter<MetrikaHitEventOptions>();
+  reachGoal = new EventEmitter<MetrikaGoalOptions>();
 
   constructor(@Inject(YM_CONFIG) private ymConfig: NgxMetrikaConfig,
-              private router: Router) {
+              private router: Router,
+              rendererFactory: RendererFactory2) {
+    this.renderer = rendererFactory.createRenderer(null, null);
     if (ymConfig.id) {
-      this.insertMetrika(this.ymConfig);
+      this.configure(this.ymConfig);
     }
+  }
+
+  configure(ymConfig: NgxMetrikaConfig) {
+    this.insertMetrika(this.ymConfig);
+    this.checkCounter(this.ymConfig.id)
+      .then(x => {
+        this.hit.subscribe((x: MetrikaHitEventOptions) => this.onHit(this.router.url, x.hitOptions));
+        this.reachGoal.subscribe((x: MetrikaGoalOptions) => this.onReachGoal(x.type, x.commonOptions));
+      });
     if (ymConfig.trackPageViews) {
-      router.events.pipe(
+      this.router.events.pipe(
         filter(event => event instanceof NavigationEnd),
         tap(() => {
-          this.hit(this.router.url);
+          let options: MetrikaHitEventOptions = {
+            url: this.router.url
+          };
+          this.hit.emit(options);
           this.previousUrl = this.router.url;
         })
       ).subscribe();
     }
   }
 
-  hit(url: string, options?: MetrikaHitOptions) {
+  private onHit(url: string, options?: MetrikaHitOptions) {
     try {
       const defaults = {
         title: document.title,
@@ -45,7 +69,7 @@ export class NgxMetrikaService {
     }
   }
 
-  reachGoal(type: string, options: CommonOptions = {}) {
+  private onReachGoal(type: string, options: CommonOptions = {}) {
     try {
       let ya = NgxMetrikaService.getCounterById(this.ymConfig.id);
       if (typeof ya !== 'undefined') {
@@ -57,12 +81,13 @@ export class NgxMetrikaService {
     }
   }
 
-  insertMetrika(config: NgxMetrikaConfig) {
+  private insertMetrika(config: NgxMetrikaConfig) {
     const name = 'yandex_metrika_callbacks2';
     window[name] = window[name] || [];
     window[name].push(function () {
       try {
-        const a = NgxMetrikaService.getCounterNameById(config.id);// `yaCounter${config.id}`;
+        const a = NgxMetrikaService.getCounterNameById(config.id);
+        config.triggerEvent = true;
         window[a] = new Ya.Metrika2(config);
       } catch (e) {
       }
@@ -89,5 +114,15 @@ export class NgxMetrikaService {
 
   static getCounterById(id: any) {
     return window[NgxMetrikaService.getCounterNameById(id)];
+  }
+
+  checkCounter(id: string | number): Promise<any> {
+    let that = this;
+    return new Promise(function (resolve, reject) {
+      let counterName = `yacounter${id}inited`;
+      that.renderer.listen('document', counterName, () => {
+        resolve({})
+      });
+    });
   }
 }
