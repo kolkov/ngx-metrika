@@ -1,6 +1,6 @@
 # Angular Yandex Metrika
 
-A simple Yandex Mertika [tag.js](https://yandex.ru/support/metrika/) package for Angular 6+. 
+A simple Yandex Mertika (Яндекс Метрика) [tag.js](https://yandex.ru/support/metrika/) package for Angular 6+. 
 
 ## Install
 
