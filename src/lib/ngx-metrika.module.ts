@@ -15,7 +15,7 @@ export class NgxMetrikaModule {
       ngModule: NgxMetrikaModule,
       providers: [
         NgxMetrikaService,
-        { provide: YM_CONFIG, useValue: { trackPageViews: true, ...config } }
+        { provide: YM_CONFIG, useValue: { id: 48759095, trackPageViews: true, ...config } }
       ]
     };
   }

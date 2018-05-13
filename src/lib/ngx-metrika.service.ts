@@ -19,15 +19,20 @@ export class NgxMetrikaService {
   previousUrl: string;
   private renderer: Renderer2;
 
-  hit = new EventEmitter<MetrikaHitEventOptions>();
-  reachGoal = new EventEmitter<MetrikaGoalEventOptions>();
+  public readonly hit:  EventEmitter<MetrikaHitEventOptions>;
+  public readonly reachGoal2: EventEmitter<MetrikaGoalEventOptions>;
 
   constructor(@Inject(YM_CONFIG) private ymConfig: NgxMetrikaConfig,
               private router: Router,
               rendererFactory: RendererFactory2) {
+    this.hit = new EventEmitter<MetrikaHitEventOptions>();
+    this.reachGoal2 = new EventEmitter<MetrikaGoalEventOptions>();
     this.renderer = rendererFactory.createRenderer(null, null);
+    console.log(this.ymConfig);
+    console.log(ymConfig);
     if (ymConfig.id) {
-      this.configure(this.ymConfig);
+      console.log(ymConfig);
+      this.configure(ymConfig);
     }
   }
 
@@ -36,7 +41,8 @@ export class NgxMetrikaService {
     this.checkCounter(this.ymConfig.id)
       .then(x => {
         this.hit.subscribe((x: MetrikaHitEventOptions) => this.onHit(this.router.url, x.hitOptions));
-        this.reachGoal.subscribe((x: MetrikaGoalEventOptions) => this.onReachGoal(x.type, x.commonOptions));
+        //this.reachGoal2.subscribe((x: MetrikaGoalEventOptions) => this.onReachGoal(x.type, x.commonOptions));
+        this.reachGoal2.pipe().subscribe();
       });
     if (ymConfig.trackPageViews) {
       this.router.events.pipe(
@@ -73,7 +79,7 @@ export class NgxMetrikaService {
     try {
       let ya = NgxMetrikaService.getCounterById(this.ymConfig.id);
       if (typeof ya !== 'undefined') {
-        ya.reachGoal(type, options.params, options.callback, options.ctx);
+        ya.reachGoal2(type, options.params, options.callback, options.ctx);
       }
     } catch (error) {
       console.error('error', error);

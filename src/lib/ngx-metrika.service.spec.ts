@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { NgxMetrikaService } from './ngx-metrika.service';
+import {NgxMetrikaService} from './ngx-metrika.service';
 
 describe('NgxMetrikaService', () => {
 
