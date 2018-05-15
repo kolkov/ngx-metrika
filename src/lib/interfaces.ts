@@ -27,6 +27,10 @@ export interface NgxMetrikaConfig {
   trackPageViews?: boolean;
   webvisor?: boolean;
   triggerEvent?: boolean;
+  defer?: boolean;
+  clickmap?: boolean;
+  trackLinks?: boolean;
+  accurateTrackBounce?:boolean;
 }
 
 export class NgxMetrikaConfig implements NgxMetrikaConfig {

@@ -28,7 +28,7 @@ export class NgxMetrikaEventDirective implements AfterViewInit {
             ...this.params
           }
         };
-        this.ym.reachGoal2.emit(goalOptions);
+        this.ym.reachGoal.next(goalOptions);
       });
     } catch (err) {
       console.error(err);

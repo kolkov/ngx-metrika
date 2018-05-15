@@ -10,12 +10,13 @@ import {NgxMetrikaEventDirective} from "./ngx-metrika-event.directive";
   imports: []
 })
 export class NgxMetrikaModule {
-  public static forRoot(config: NgxMetrikaConfig): ModuleWithProviders {
+  public static forRoot(config?: NgxMetrikaConfig): ModuleWithProviders {
     return {
       ngModule: NgxMetrikaModule,
       providers: [
         NgxMetrikaService,
-        { provide: YM_CONFIG, useValue: { id: 48759095, trackPageViews: true, ...config } }
+        //{ provide: YM_CONFIG, useValue: {trackPageViews: true, ...config } }
+        { provide: YM_CONFIG, useValue: config }
       ]
     };
   }
