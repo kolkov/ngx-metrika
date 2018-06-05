@@ -4,18 +4,22 @@ A simple Yandex Mertika (Яндекс Метрика) [tag.js](https://yandex.ru
 
 ## Install
 
+Install via [npm][npm] package manager
+
 ```
 npm install @kolkov/ngx-metrika --save
 ```
 
 Add the package to your `app.module.ts`.
-Then add property `yaCounterId` to the `environment` constant
+Then add property `yaCounterId` to the `environment` constant or use inline
 
 ```ts
+import { RouterModule } from '@angular/router';
 import { NgxMetrikaModule } from '@kolkov/ngx-metrika';
 
 @NgModule({
   imports: [
+    RouterModule.forRoot([]),
     NgxMetrikaModule.forRoot({id: environment.yaCounterId, trackPageViews: true})
   ]
 })
@@ -89,3 +93,13 @@ You can pass optional params to the directive like so:
 ```
 
 The directive will produce the following event on dragstart. 
+
+## Demo
+Demo is here [demo][demo]
+
+Working code for this demo at stackblitz [example](https://stackblitz.com/edit/ngx-metrika)
+
+[npm]: https://www.npmjs.com/
+[demo]: https://ngx-metrika.stackblitz.io
+[example]: https://stackblitz.com/edit/ngx-metrika
+
