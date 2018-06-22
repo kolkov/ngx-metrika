@@ -56,9 +56,9 @@ this.ym.hit.emit({url: '/custom',{
 }});
 ```
 
-## Target
+## ReachGoal
 
-[Target](https://yandex.ru/support/metrika/objects/reachgoal.html) expect an action. 
+[ReachGoal](https://yandex.ru/support/metrika/objects/reachgoal.html) expect an action. 
 
 ```ts
 this.ym.reachGoal.next({target: 'TARGET_NAME'})

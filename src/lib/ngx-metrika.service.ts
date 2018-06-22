@@ -99,7 +99,7 @@ export class NgxMetrikaService {
       const ya = NgxMetrikaService.getCounterById(this.config.id);
       if (typeof ya !== 'undefined') {
         if (this.debug) {
-          console.log("onReachGoal1:", type, options);
+          console.log("onReachGoal:", type, options);
         }
         ya.reachGoal(type, options.params, options.callback, options.ctx);
       }
