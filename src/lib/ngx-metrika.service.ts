@@ -17,49 +17,55 @@ declare var Ya: any;
   providedIn: 'root'
 })
 export class NgxMetrikaService {
+  defaultConfig: NgxMetrikaConfig = {
+    id: 0,
+    triggerEvent: true,
+    trackPageViews: true,
+  };
+  config: NgxMetrikaConfig;
+  debug = false;
   previousUrl: string;
   private renderer: Renderer2;
 
   public hit = new EventEmitter<MetrikaHitEventOptions>();
-  public reachGoal = new BehaviorSubject<MetrikaGoalEventOptions>({type: 'test'});
+  public reachGoal = new BehaviorSubject<MetrikaGoalEventOptions>({target: 'test'});
 
   constructor(@Inject(YM_CONFIG) private ymConfig: NgxMetrikaConfig,
               private router: Router,
               rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);
-    console.log(this.ymConfig);
-    console.log(ymConfig);
-    if (ymConfig.id) {
-      console.log(ymConfig);
-      this.configure(ymConfig);
+    this.config = Object.assign(this.defaultConfig, ymConfig);
+    if (this.config.id) {
+      this.configure(this.config);
     }
   }
 
-  configure(ymConfig: NgxMetrikaConfig) {
-    console.log("Configure called");
-    this.insertMetrika(this.ymConfig);
-    this.checkCounter(this.ymConfig.id)
+  static getCounterNameById(id: string | number): string {
+    return `yaCounter${id}`;
+  }
+
+  static getCounterById(id: any) {
+    return window[NgxMetrikaService.getCounterNameById(id)];
+  }
+
+  configure(config: NgxMetrikaConfig) {
+    this.insertMetrika(config);
+    this.checkCounter(config.id)
       .then(x => {
-        console.log("hit subscribed");
-        this.hit.subscribe((x: MetrikaHitEventOptions) => {
-          this.onHit(this.router.url, x.hitOptions);
-          console.log("hit called")
+        this.hit.subscribe((y: MetrikaHitEventOptions) => {
+          this.onHit(this.router.url, y.hitOptions);
         });
-        console.log("reachGoal subscribed");
-        this.reachGoal.subscribe((x: MetrikaGoalEventOptions) => {
-          console.log("reachGoal start calling");
-          this.onReachGoal(x.type, x.commonOptions);
-          console.log("reachGoal called")
+        this.reachGoal.subscribe((y: MetrikaGoalEventOptions) => {
+          this.onReachGoal(y.target, y.options);
         });
       });
-    if (ymConfig.trackPageViews) {
+    if (config.trackPageViews) {
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd),
         tap(() => {
-          let options: MetrikaHitEventOptions = {
+          const options: MetrikaHitEventOptions = {
             url: this.router.url
           };
-          console.log("router hit.emit called");
           this.hit.emit(options);
           this.previousUrl = this.router.url;
         })
@@ -70,18 +76,19 @@ export class NgxMetrikaService {
   private onHit(url: string, options?: MetrikaHitOptions) {
     try {
       const defaults = {
-        //title: "My App",
         referer: this.previousUrl
       };
-      let ya = NgxMetrikaService.getCounterById(this.ymConfig.id);
-      if (typeof ya !== 'undefined') {
-        console.log("Defaults:", defaults);
-        console.log("Options:", options);
-        options = {...defaults, ...options};
-        console.log("Options after:", options);
-        ya.hit(url, options);
+      if (this.debug) {
+        console.log("Hit:", url, defaults, options);
       }
-
+      const ya = NgxMetrikaService.getCounterById(this.config.id);
+      if (typeof ya !== 'undefined') {
+        const optionsNew = Object.assign(defaults, options);
+        if (this.debug) {
+          console.log("Hit:", url, optionsNew);
+        }
+        ya.hit(url, optionsNew);
+      }
     } catch (err) {
       console.error('Yandex Metrika hit error', err);
     }
@@ -89,10 +96,11 @@ export class NgxMetrikaService {
 
   private onReachGoal(type: string, options: CommonOptions = {}) {
     try {
-      let ya = NgxMetrikaService.getCounterById(this.ymConfig.id);
-      console.log("onReachGoal1:", type, options);
+      const ya = NgxMetrikaService.getCounterById(this.config.id);
       if (typeof ya !== 'undefined') {
-        console.log("onReachGoal2:", type, options);
+        if (this.debug) {
+          console.log("onReachGoal1:", type, options);
+        }
         ya.reachGoal(type, options.params, options.callback, options.ctx);
       }
     } catch (error) {
@@ -102,19 +110,11 @@ export class NgxMetrikaService {
   }
 
   private insertMetrika(config: NgxMetrikaConfig) {
-    console.log("insertMetrika called");
     const name = 'yandex_metrika_callbacks2';
     window[name] = window[name] || [];
     window[name].push(function () {
       try {
         const a = NgxMetrikaService.getCounterNameById(config.id);
-        config.triggerEvent = true;
-        config.defer = true;
-        config.webvisor = true;
-        config.clickmap = true;
-        config.trackLinks = true;
-        config.accurateTrackBounce = true;
-        console.log("Config before init:", config);
         window[a] = new Ya.Metrika2(config);
       } catch (e) {
       }
@@ -135,22 +135,12 @@ export class NgxMetrikaService {
     return name;
   }
 
-  static getCounterNameById(id: string | number): string {
-    return `yaCounter${id}`;
-  }
-
-  static getCounterById(id: any) {
-    return window[NgxMetrikaService.getCounterNameById(id)];
-  }
-
   checkCounter(id: string | number): Promise<any> {
-    console.log("checkCounter called");
-    let that = this;
+    const that = this;
     return new Promise(function (resolve, reject) {
-      let counterName = `yacounter${id}inited`;
+      const counterName = `yacounter${id}inited`;
       that.renderer.listen('document', counterName, () => {
-        console.log("checkCounter resolve called");
-        resolve({})
+        resolve({});
       });
     });
   }

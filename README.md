@@ -11,7 +11,7 @@ npm install @kolkov/ngx-metrika --save
 ```
 
 Add the package to your `app.module.ts`.
-Then add property `yaCounterId` to the `environment` constant or use inline
+Then simple add property `yaCounterId` to the `environment` constant or use inline
 
 ```ts
 import { RouterModule } from '@angular/router';
@@ -20,7 +20,15 @@ import { NgxMetrikaModule } from '@kolkov/ngx-metrika';
 @NgModule({
   imports: [
     RouterModule.forRoot([]),
-    NgxMetrikaModule.forRoot({id: environment.yaCounterId, trackPageViews: true})
+    NgxMetrikaModule.forRoot({
+      id: environment.yaCounterId,
+      ...      
+      defer: true,
+      webvisor: true,
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+    })
   ]
 })
 ```
@@ -53,27 +61,31 @@ this.ym.hit.emit({url: '/custom',{
 [Target](https://yandex.ru/support/metrika/objects/reachgoal.html) expect an action. 
 
 ```ts
-this.ym.reachGoal.emit({'TARGET_NAME'})
+this.ym.reachGoal.next({target: 'TARGET_NAME'})
 ```
 
 You can optionally pass in addtional params.
 
-
 ```ts
-this.ym.reachGoal.emit({'login', { 
-  method: 'Instagram',
-  event_category: 'engagemnt',
-  event_label: 'New user logged in via OAuth'
-}});
+function goalCallback () {
+        console.log('request to Metrika sent successfully');
+    }
+const options: CommonOptions = {     
+         params: {
+            productId: product.id,
+            productName: product.name,
+         },
+         callback: goalCallback,
+      }
+this.ym.reachGoal.next({target: 'ADD_TO_CART', options});
 ```
-
 
 ## Target Directive
 
 Many analytics events are tracked based on user interaction, such as button clicks. Just tell it which DOM event to track.  
 
 ```html
-<button ymTarget trackOn="click">Track Me</button>
+<button ymGoal trackOn="click">Track Me</button>
 ```
 
 This will register a general Target in Yandex Metrika based on the target name.
@@ -81,11 +93,9 @@ This will register a general Target in Yandex Metrika based on the target name.
 You can pass optional params to the directive like so:
 
 ```html
-<div ymTarget
-     trackOn="dragstart" 
-     action="product_dragged"
-     category="ecommerce" 
-     [params]="{ event_label: 'Something cool just happened' }">
+<div ymGoal     
+     target="PROGUCT_DRAGGED"     
+     [params]="{ targetLabel: 'Something cool just happened' }">
 
    Some Product...
    

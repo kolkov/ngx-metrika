@@ -2,11 +2,11 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {NgxMetrikaConfig} from "./interfaces";
 import {NgxMetrikaService} from "./ngx-metrika.service";
 import {YM_CONFIG} from "./ym.token";
-import {NgxMetrikaEventDirective} from "./ngx-metrika-event.directive";
+import {NgxMetrikaGoalDirective} from "./ngx-metrika-goal.directive";
 
 @NgModule({
-  declarations: [NgxMetrikaEventDirective],
-  exports: [NgxMetrikaEventDirective],
+  declarations: [NgxMetrikaGoalDirective],
+  exports: [NgxMetrikaGoalDirective],
   imports: []
 })
 export class NgxMetrikaModule {
@@ -15,7 +15,6 @@ export class NgxMetrikaModule {
       ngModule: NgxMetrikaModule,
       providers: [
         NgxMetrikaService,
-        //{ provide: YM_CONFIG, useValue: {trackPageViews: true, ...config } }
         { provide: YM_CONFIG, useValue: config }
       ]
     };

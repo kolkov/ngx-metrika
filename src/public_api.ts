@@ -4,6 +4,6 @@
 
 export * from './lib/ngx-metrika.service';
 export * from './lib/ngx-metrika.module';
-export * from './lib/ngx-metrika-event.directive';
-export * from './lib/interfaces'
-export * from './lib/ym.token'
+export * from './lib/ngx-metrika-goal.directive';
+export * from './lib/interfaces';
+export * from './lib/ym.token';

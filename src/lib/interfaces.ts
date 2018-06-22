@@ -5,10 +5,10 @@ export interface CallbackOptions {
 
 export interface CommonOptions extends CallbackOptions {
   params?: any;
-  title?: any;
 }
 
 export interface MetrikaHitOptions extends CommonOptions {
+  title?: any;
   referer?: string;
 }
 
@@ -18,21 +18,17 @@ export interface MetrikaHitEventOptions {
 }
 
 export interface MetrikaGoalEventOptions {
-  type: string;
-  commonOptions?: CommonOptions;
+  target: string;
+  options?: CommonOptions;
 }
 
 export interface NgxMetrikaConfig {
-  id: string | number;
+  id: number;
   trackPageViews?: boolean;
   webvisor?: boolean;
   triggerEvent?: boolean;
   defer?: boolean;
   clickmap?: boolean;
   trackLinks?: boolean;
-  accurateTrackBounce?:boolean;
-}
-
-export class NgxMetrikaConfig implements NgxMetrikaConfig {
-  triggerEvent? = true;
+  accurateTrackBounce?: boolean;
 }

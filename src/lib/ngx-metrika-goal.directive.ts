@@ -3,13 +3,13 @@ import {AfterViewInit, Directive, ElementRef, Input, Renderer2} from "@angular/c
 import {MetrikaGoalEventOptions} from "./interfaces";
 
 @Directive({
-  selector: '[ymEvent]'
+  selector: '[ymGoal]'
 })
-export class NgxMetrikaEventDirective implements AfterViewInit {
+export class NgxMetrikaGoalDirective implements AfterViewInit {
   @Input() trackOn: string;
-  @Input() action: string;
-  @Input() category: string;
+  @Input() target: string;
   @Input() params: any;
+  @Input() callback: Function;
 
   constructor(
     private ym: NgxMetrikaService,
@@ -21,10 +21,10 @@ export class NgxMetrikaEventDirective implements AfterViewInit {
   ngAfterViewInit() {
     try {
       this.renderer.listen(this.el.nativeElement, this.trackOn, () => {
-        let goalOptions: MetrikaGoalEventOptions = {
-          type: this.action || this.trackOn,
-          commonOptions: {
-            event_category: this.category,
+        const goalOptions: MetrikaGoalEventOptions = {
+          target: this.target || this.trackOn,
+          options: {
+            callback: this.callback,
             ...this.params
           }
         };
