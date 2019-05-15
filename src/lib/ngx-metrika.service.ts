@@ -1,4 +1,5 @@
 import {EventEmitter, Inject, Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import {NavigationEnd, Router} from "@angular/router";
 import {
   CommonOptions,
@@ -30,9 +31,12 @@ export class NgxMetrikaService {
   public hit = new EventEmitter<MetrikaHitEventOptions>();
   public reachGoal = new BehaviorSubject<MetrikaGoalEventOptions>({target: 'test'});
 
-  constructor(@Inject(YM_CONFIG) private ymConfig: NgxMetrikaConfig,
-              private router: Router,
-              rendererFactory: RendererFactory2) {
+  constructor(
+    @Inject(YM_CONFIG) private ymConfig: NgxMetrikaConfig,
+    private router: Router,
+    rendererFactory: RendererFactory2,
+    @Inject(DOCUMENT) private document: Document,
+  ) {
     this.renderer = rendererFactory.createRenderer(null, null);
     this.config = Object.assign(this.defaultConfig, ymConfig);
     if (this.config.id) {
@@ -120,15 +124,15 @@ export class NgxMetrikaService {
       }
     });
 
-    const n = document.getElementsByTagName('script')[0];
-    const s = document.createElement('script');
+    const head = this.document.getElementsByTagName('head')[0];
+    const s = this.document.createElement('script');
     s.type = 'text/javascript';
     s.async = true;
     s.src = 'https://mc.yandex.ru/metrika/tag.js';
-    const insetScriptTag = () => n.parentNode.insertBefore(s, n);
+    const insetScriptTag = () => head.appendChild(s);
 
     if ((window as any).opera === '[object Opera]') {
-      document.addEventListener('DOMContentLoaded', insetScriptTag, false);
+      this.document.addEventListener('DOMContentLoaded', insetScriptTag, false);
     } else {
       insetScriptTag();
     }
