@@ -42,6 +42,123 @@
           }
         }
       }
+    },
+    "ngx-metrika-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/ngx-metrika-app",
+      "sourceRoot": "projects/ngx-metrika-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ngx-metrika-app",
+            "index": "projects/ngx-metrika-app/src/index.html",
+            "main": "projects/ngx-metrika-app/src/main.ts",
+            "polyfills": "projects/ngx-metrika-app/src/polyfills.ts",
+            "tsConfig": "projects/ngx-metrika-app/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/ngx-metrika-app/src/favicon.ico",
+              "projects/ngx-metrika-app/src/assets"
+            ],
+            "styles": [
+              "projects/ngx-metrika-app/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ngx-metrika-app/src/environments/environment.ts",
+                  "with": "projects/ngx-metrika-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ngx-metrika-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ngx-metrika-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngx-metrika-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-metrika-app/src/test.ts",
+            "polyfills": "projects/ngx-metrika-app/src/polyfills.ts",
+            "tsConfig": "projects/ngx-metrika-app/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-metrika-app/karma.conf.js",
+            "assets": [
+              "projects/ngx-metrika-app/src/favicon.ico",
+              "projects/ngx-metrika-app/src/assets"
+            ],
+            "styles": [
+              "projects/ngx-metrika-app/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-metrika-app/tsconfig.app.json",
+              "projects/ngx-metrika-app/tsconfig.spec.json",
+              "projects/ngx-metrika-app/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/ngx-metrika-app/e2e/protractor.conf.js",
+            "devServerTarget": "ngx-metrika-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngx-metrika-app:serve:production"
+            }
+          }
+        }
+      }
     }
   },
   "defaultProject": "@kolkov/ngx-metrika"
