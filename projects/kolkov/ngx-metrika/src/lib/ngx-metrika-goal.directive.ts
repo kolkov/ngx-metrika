@@ -1,6 +1,6 @@
 import {NgxMetrikaService} from './ngx-metrika.service';
-import {AfterViewInit, Directive, ElementRef, Input, Renderer2} from "@angular/core";
-import {MetrikaGoalEventOptions} from "./interfaces";
+import {AfterViewInit, Directive, ElementRef, Input, Renderer2} from '@angular/core';
+import {MetrikaGoalEventOptions} from './interfaces';
 
 @Directive({
   selector: '[ymGoal]'
@@ -9,7 +9,7 @@ export class NgxMetrikaGoalDirective implements AfterViewInit {
   @Input() trackOn: string;
   @Input() target: string;
   @Input() params: any;
-  @Input() callback: Function;
+  @Input() callback: () => void;
 
   constructor(
     private ym: NgxMetrikaService,

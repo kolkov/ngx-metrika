@@ -1,8 +1,8 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {NgxMetrikaConfig} from "./interfaces";
-import {NgxMetrikaService} from "./ngx-metrika.service";
-import {YM_CONFIG} from "./ym.token";
-import {NgxMetrikaGoalDirective} from "./ngx-metrika-goal.directive";
+import {NgxMetrikaConfig} from './interfaces';
+import {NgxMetrikaService} from './ngx-metrika.service';
+import {YM_CONFIG} from './ym.token';
+import {NgxMetrikaGoalDirective} from './ngx-metrika-goal.directive';
 
 @NgModule({
   declarations: [NgxMetrikaGoalDirective],
