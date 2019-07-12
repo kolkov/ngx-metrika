@@ -7,6 +7,11 @@
 
 A simple Yandex Mertika (Яндекс Метрика) [tag.js](https://yandex.ru/support/metrika/) package for Angular 6+. 
 
+## Demo
+Demo is here [demo][demo]
+
+Working code for this demo at stackblitz [example](https://stackblitz.com/edit/ngx-metrika)
+
 ## Install
 
 Install via [npm][npm] package manager
@@ -109,10 +114,41 @@ You can pass optional params to the directive like so:
 
 The directive will produce the following event on dragstart. 
 
-## Demo
-Demo is here [demo][demo]
+## What's included
 
-Working code for this demo at stackblitz [example](https://stackblitz.com/edit/ngx-metrika)
+Within the download you'll find the following directories and files. You'll see something like this:
+
+```
+metrika/
+└── projects/
+    ├── ngx-metrika/
+    └── ngx-metrika-app/
+```
+`ngx-metrika/` - library
+
+`ngx-metrika-app/` - demo application
+
+## Documentation
+
+The documentation for the `ngx-metrika` is hosted at our website [ngx-metrika](https://ngx-metrika.kolkov.ru/)
+
+## Contributing
+
+Please read through our [contributing guidelines](https://github.com/kolkov/ngx-metrika/blob/master/CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
+
+Editor preferences are available in the [editor config](https://github.com/kolkov/ngx-metrika/blob/master/.editorconfig) for easy use in common text editors. Read more and download plugins at <http://editorconfig.org>.
+
+## Versioning
+
+For transparency into our release cycle and in striving to maintain backward compatibility, `ngx-metrika` is maintained under [the Semantic Versioning guidelines](http://semver.org/).
+
+See [the Releases section of our project](https://github.com/kolkov/ngx-metrika/releases) for changelogs for each release version.
+
+## Creators
+
+**Andrey Kolkov**
+
+* <https://github.com/kolkov>
 
 [npm]: https://www.npmjs.com/
 [demo]: https://ngx-metrika.stackblitz.io
