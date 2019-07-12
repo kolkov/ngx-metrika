@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kolkov/ngx-metrika.svg?branch=master)](https://travis-ci.org/kolkov/ngx-metrika)
+
 # Angular Yandex Metrika
 
 A simple Yandex Mertika (Яндекс Метрика) [tag.js](https://yandex.ru/support/metrika/) package for Angular 6+. 
