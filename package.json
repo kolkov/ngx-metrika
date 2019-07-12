@@ -1,19 +1,58 @@
 {
-  "name": "@kolkov/ngx-metrika",
-  "version": "0.4.0",
-  "author": "Andrey Kolkov <a.kolkov@gmail.com>",
-  "repository": "https://github.com/kolkov/ngx-metrika",
-  "license": "MIT",
-  "private": false,
-  "peerDependencies": {
-    "@angular/common": ">6.0.0",
-    "@angular/core": ">6.0.0",
-    "@angular/router": ">6.0.0"
+  "name": "metrika",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "build-watch:lib": "ng build @kolkov/ngx-metrika --watch",
+    "build:lib": "ng build @kolkov/ngx-metrika",
+    "publish:lib": "npm run copy:readme && copy:changelog && copy:license && npm publish ./dist/kolkov/ngx-metrika",
+    "test:lib": "ng test @kolkov/ngx-metrika",
+    "copy:readme": "cpx ./README.md dist/kolkov/ngx-metrika",
+    "copy:changelog": "cpx ./CHANGELOG.md dist/kolkov/ngx-metrika",
+    "copy:license": "cpx ./LICENSE dist/kolkov/ngx-metrika",
+    "test-ci": "ng test @kolkov/ngx-metrika --code-coverage --watch=false --browsers=ChromeHeadless && cat ./coverage/kolkov/ngx-metrika/lcov.info | coveralls"
   },
-  "keywords": [
-    "angular",
-    "yandex metrika",
-    "tag.js",
-    "яндекс метрика"
-  ]
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~8.1.1",
+    "@angular/common": "~8.1.1",
+    "@angular/compiler": "~8.1.1",
+    "@angular/core": "~8.1.1",
+    "@angular/forms": "~8.1.1",
+    "@angular/platform-browser": "~8.1.1",
+    "@angular/platform-browser-dynamic": "~8.1.1",
+    "@angular/router": "~8.1.1",
+    "rxjs": "~6.4.0",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.9.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.801.1",
+    "@angular-devkit/build-ng-packagr": "~0.801.1",
+    "@angular/cli": "~8.1.1",
+    "@angular/compiler-cli": "~8.1.1",
+    "@angular/language-service": "~8.1.1",
+    "@types/node": "~8.9.4",
+    "@types/jasmine": "~3.3.8",
+    "@types/jasminewd2": "~2.0.3",
+    "codelyzer": "^5.0.0",
+    "jasmine-core": "~3.4.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~4.1.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~2.0.1",
+    "karma-jasmine-html-reporter": "^1.4.0",
+    "ng-packagr": "^5.1.0",
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tsickle": "^0.35.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.4.3"
+  }
 }
