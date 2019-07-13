@@ -24,7 +24,7 @@ script:
   - codecov
   - npm run build:lib
 before_deploy:
-  - cd dist/kolkov/ngx-metrika
+  - cd dist/ngx-metrika
 deploy:
   provider: npm
   email: a.kolkov@gmail.com

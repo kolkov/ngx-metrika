@@ -4,7 +4,7 @@ import {NgxMetrikaService} from './ngx-metrika.service';
 import {HttpClientModule} from '@angular/common/http';
 import {YM_CONFIG} from './ym.token';
 import {NgxMetrikaConfig} from './interfaces';
-import {NavigationEnd, Router, RouterModule, Scroll} from '@angular/router';
+import {NavigationEnd, Router, Scroll} from '@angular/router';
 import {of} from 'rxjs';
 
 describe('NgxMetrikaService', () => {
