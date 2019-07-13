@@ -30,13 +30,12 @@ export class NgxMetrikaService {
   public hit = new EventEmitter<MetrikaHitEventOptions>();
   public reachGoal = new BehaviorSubject<MetrikaGoalEventOptions>({target: 'test'});
 
-  constructor(@Inject(YM_CONFIG) private ymConfig: NgxMetrikaConfig,
+  constructor(@Inject(YM_CONFIG) ymConfig: NgxMetrikaConfig,
               private router: Router,
               rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);
-    this.config = Object.assign(this.defaultConfig, ymConfig);
-    if (this.config.id) {
-      this.configure(this.config);
+    if (ymConfig && ymConfig.id) {
+      this.configure(ymConfig);
     }
   }
 
@@ -49,6 +48,8 @@ export class NgxMetrikaService {
   }
 
   configure(config: NgxMetrikaConfig) {
+    config = Object.assign({}, this.defaultConfig, config);
+    this.config = config;
     this.insertMetrika(config);
     this.checkCounter(config.id)
       .then(x => {
