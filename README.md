@@ -1,6 +1,6 @@
 # Angular Yandex Metrika
 [![npm version](https://badge.fury.io/js/%40kolkov%2Fngx-metrika.svg)](https://badge.fury.io/js/%40kolkov%2Fngx-metrika)
-[![Build Status](https://travis-ci.org/kolkov/ngx-metrika.svg?branch=master)](https://travis-ci.org/kolkov/ngx-metrika)
+[![Build Status](https://travis-ci.com/kolkov/ngx-metrika.svg?branch=master)](https://travis-ci.com/kolkov/ngx-metrika)
 [![Coverage Status](https://coveralls.io/repos/github/kolkov/ngx-metrika/badge.svg?branch=master)](https://coveralls.io/github/kolkov/ngx-metrika?branch=master)
 [![codecov](https://codecov.io/gh/kolkov/ngx-metrika/branch/master/graph/badge.svg)](https://codecov.io/gh/kolkov/ngx-metrika)
 
