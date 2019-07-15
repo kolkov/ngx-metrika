@@ -5,9 +5,6 @@ dist: trusty
 sudo: required
 addons:
   chrome: stable
-branches:
-  only:
-    - master
 cache:
   directories:
     - node_modules
@@ -19,11 +16,14 @@ before_script:
   - npm install -g @angular/cli
   - npm install -g codecov
 script:
-  - npm run lint
+  - npm run lint:lib
   - npm run test-ci
   - codecov
   - npm run build:lib
 before_deploy:
+  - npm run copy:readme
+  - npm run copy:changelog
+  - npm run copy:license
   - cd dist/ngx-metrika
 deploy:
   provider: npm
