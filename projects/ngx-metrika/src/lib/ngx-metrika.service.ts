@@ -8,6 +8,7 @@ import {DOCUMENT} from '@angular/common';
 
 declare var Ya: any;
 
+/** @dynamic */
 @Injectable({
   providedIn: 'root'
 })
