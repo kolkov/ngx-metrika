@@ -1,15 +1,10 @@
 import {EventEmitter, Inject, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-import {
-  CommonOptions,
-  MetrikaGoalEventOptions,
-  MetrikaHitEventOptions,
-  MetrikaHitOptions,
-  NgxMetrikaConfig
-} from './interfaces';
+import {CommonOptions, MetrikaGoalEventOptions, MetrikaHitEventOptions, MetrikaHitOptions, NgxMetrikaConfig} from './interfaces';
 import {filter, tap} from 'rxjs/operators';
 import {YM_CONFIG} from './ym.token';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {DOCUMENT} from '@angular/common';
 
 declare var Ya: any;
 
@@ -30,9 +25,12 @@ export class NgxMetrikaService {
   public hit = new EventEmitter<MetrikaHitEventOptions>();
   public reachGoal = new BehaviorSubject<MetrikaGoalEventOptions>({target: 'test'});
 
-  constructor(@Inject(YM_CONFIG) ymConfig: NgxMetrikaConfig,
-              private router: Router,
-              rendererFactory: RendererFactory2) {
+  constructor(
+    @Inject(YM_CONFIG) ymConfig: NgxMetrikaConfig,
+    private router: Router,
+    rendererFactory: RendererFactory2,
+    @Inject(DOCUMENT) private document: Document,
+  ) {
     this.renderer = rendererFactory.createRenderer(null, null);
     if (ymConfig && ymConfig.id) {
       this.configure(ymConfig);
@@ -52,7 +50,7 @@ export class NgxMetrikaService {
     this.config = config;
     this.insertMetrika(config);
     this.checkCounter(config.id)
-      .then(x => {
+      .then(() => {
         this.hit.subscribe((y: MetrikaHitEventOptions) => {
           this.onHit(this.router.url, y.hitOptions);
         });
@@ -121,15 +119,15 @@ export class NgxMetrikaService {
       }
     });
 
-    const n = document.getElementsByTagName('script')[0];
+    const head = this.document.getElementsByTagName('head')[0];
     const s = document.createElement('script');
     s.type = 'text/javascript';
     s.async = true;
     s.src = 'https://mc.yandex.ru/metrika/tag.js';
-    const insetScriptTag = () => n.parentNode.insertBefore(s, n);
+    const insetScriptTag = () => head.appendChild(s);
 
     if ((window as any).opera === '[object Opera]') {
-      document.addEventListener('DOMContentLoaded', insetScriptTag, false);
+      this.document.addEventListener('DOMContentLoaded', insetScriptTag, false);
     } else {
       insetScriptTag();
     }
@@ -138,7 +136,7 @@ export class NgxMetrikaService {
 
   checkCounter(id: string | number): Promise<any> {
     const that = this;
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const counterName = `yacounter${id}inited`;
       that.renderer.listen('document', counterName, () => {
         resolve({});
