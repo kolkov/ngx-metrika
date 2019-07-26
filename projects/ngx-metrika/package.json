@@ -1,9 +1,10 @@
 {
   "name": "@kolkov/ngx-metrika",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": "Andrey Kolkov <a.kolkov@gmail.com>",
   "repository": "https://github.com/kolkov/ngx-metrika",
   "license": "MIT",
+  "description": "A simple Yandex Mertika (Яндекс Метрика) package for Angular 6+.",
   "private": false,
   "peerDependencies": {
     "@angular/common": ">6.0.0",
