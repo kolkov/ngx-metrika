@@ -3,7 +3,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {CommonOptions, MetrikaGoalEventOptions, MetrikaHitEventOptions, MetrikaHitOptions, NgxMetrikaConfig} from './interfaces';
 import {filter, tap} from 'rxjs/operators';
 import {YM_CONFIG} from './ym.token';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 import {DOCUMENT} from '@angular/common';
 
 declare var Ya: any;
