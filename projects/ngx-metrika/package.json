@@ -11,6 +11,9 @@
     "@angular/core": ">6.0.0",
     "@angular/router": ">6.0.0"
   },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
   "keywords": [
     "angular",
     "yandex metrika",

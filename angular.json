@@ -15,10 +15,15 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ngx-metrika/tsconfig.lib.json",
             "project": "projects/ngx-metrika/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-metrika/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -62,7 +67,6 @@
             "main": "projects/ngx-metrika-app/src/main.ts",
             "polyfills": "projects/ngx-metrika-app/src/polyfills.ts",
             "tsConfig": "projects/ngx-metrika-app/tsconfig.app.json",
-            "aot": false,
             "assets": [
               "projects/ngx-metrika-app/src/favicon.ico",
               "projects/ngx-metrika-app/src/assets"
@@ -70,7 +74,13 @@
             "styles": [
               "projects/ngx-metrika-app/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -83,9 +93,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -94,6 +102,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -161,5 +173,8 @@
       }
     }
   },
-  "defaultProject": "ngx-metrika-app"
+  "defaultProject": "ngx-metrika-app",
+  "cli": {
+    "analytics": "a406fc73-39f8-4f9d-b4a2-c47a90e4b7fc"
+  }
 }

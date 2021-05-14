@@ -10,7 +10,7 @@ import {NgxMetrikaGoalDirective} from './ngx-metrika-goal.directive';
   imports: []
 })
 export class NgxMetrikaModule {
-  public static forRoot(config?: NgxMetrikaConfig): ModuleWithProviders {
+  public static forRoot(config?: NgxMetrikaConfig): ModuleWithProviders<NgxMetrikaModule> {
     return {
       ngModule: NgxMetrikaModule,
       providers: [
