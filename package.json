@@ -1,6 +1,6 @@
 {
   "name": "@kolkov/ngx-metrika",
-  "version": "0.0.0",
+  "version": "0.5.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve ngx-metrika-app",
@@ -11,6 +11,7 @@
     "build-watch:lib": "ng build @kolkov/ngx-metrika --watch",
     "test:lib": "ng test @kolkov/ngx-metrika",
     "build:lib": "ng build @kolkov/ngx-metrika",
+    "build-prod:lib": "ng build @kolkov/ngx-metrika --prod",
     "publish:lib": "npm run copy:readme && npm run copy:changelog && npm run copy:license && npm publish ./dist/kolkov/ngx-metrika",
     "copy:readme": "cpx README.md ./dist/kolkov/ngx-metrika",
     "copy:changelog": "cpx CHANGELOG.md ./dist/kolkov/ngx-metrika",
