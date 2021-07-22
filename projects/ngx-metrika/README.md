@@ -56,6 +56,15 @@ this.ym.hit.emit({url: '/custom',{
 }});
 ```
 
+## Disable service
+If we need to disable service for some reason, such as logged in into private area, we can disable it:
+```ts
+this.ym.disable();
+```
+If we need to re-enable service (when logoff from private area), then we can enable it:
+```ts
+this.ym.enable();
+```
 ## ReachGoal
 
 [ReachGoal](https://yandex.ru/support/metrika/objects/reachgoal.html) expect an action. 

@@ -21,6 +21,8 @@ export class NgxMetrikaService {
   config: NgxMetrikaConfig;
   debug = false;
   previousUrl: string;
+
+  private disabled: boolean;
   private renderer: Renderer2;
 
   public hit = new EventEmitter<MetrikaHitEventOptions>();
@@ -73,7 +75,28 @@ export class NgxMetrikaService {
     }
   }
 
+  disable() {
+    this.disabled = true;
+  }
+
+  enable() {
+    this.disabled = false;
+  }
+
+  checkCounter(id: string | number): Promise<any> {
+    const that = this;
+    return new Promise((resolve) => {
+      const counterName = `yacounter${id}inited`;
+      that.renderer.listen('document', counterName, () => {
+        resolve({});
+      });
+    });
+  }
+
   private onHit(url: string, options?: MetrikaHitOptions) {
+    if (this.disabled) {
+      return;
+    }
     try {
       const defaults = {
         referer: this.previousUrl
@@ -133,15 +156,5 @@ export class NgxMetrikaService {
       insetScriptTag();
     }
     return name;
-  }
-
-  checkCounter(id: string | number): Promise<any> {
-    const that = this;
-    return new Promise((resolve) => {
-      const counterName = `yacounter${id}inited`;
-      that.renderer.listen('document', counterName, () => {
-        resolve({});
-      });
-    });
   }
 }

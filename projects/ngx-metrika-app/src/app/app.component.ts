@@ -7,9 +7,10 @@ import {NgxMetrikaService} from '@kolkov/ngx-metrika';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  name = 'Angular 6 Yandex Metrika';
+  name = 'Angular 6+ Yandex Metrika';
 
   constructor(private ym: NgxMetrikaService) {
     ym.debug = true;
+    ym.disable();
   }
 }
