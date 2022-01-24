@@ -35,14 +35,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ngx-metrika/tsconfig.lib.json",
-              "projects/ngx-metrika/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ngx-metrika/**/*.ts",
+              "projects/ngx-metrika/**/*.html"
             ]
           }
         }
@@ -146,15 +143,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ngx-metrika-app/tsconfig.app.json",
-              "projects/ngx-metrika-app/tsconfig.spec.json",
-              "projects/ngx-metrika-app/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ngx-metrika-app/**/*.ts",
+              "projects/ngx-metrika-app/**/*.html"
             ]
           }
         },
@@ -175,6 +168,7 @@
   },
   "defaultProject": "ngx-metrika-app",
   "cli": {
-    "analytics": "a406fc73-39f8-4f9d-b4a2-c47a90e4b7fc"
+    "analytics": "a406fc73-39f8-4f9d-b4a2-c47a90e4b7fc",
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }
