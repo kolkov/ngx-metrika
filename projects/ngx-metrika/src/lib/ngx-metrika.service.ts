@@ -149,7 +149,7 @@ export class NgxMetrikaService {
     const s = document.createElement('script');
     s.type = 'text/javascript';
     s.async = true;
-    s.src = this.sanitizer.bypassSecurityTrustResourceUrl('https://mc.yandex.ru/metrika/tag.js').toString();
+    s.src = this.sanitizer.bypassSecurityTrustScript('https://mc.yandex.ru/metrika/tag.js').toString();
     const insetScriptTag = () => head.appendChild(s);
 
     if ((window as any).opera === '[object Opera]') {
