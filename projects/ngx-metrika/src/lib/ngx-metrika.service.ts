@@ -148,8 +148,8 @@ export class NgxMetrikaService {
     const s = 'https://mc.yandex.ru/metrika/tag.js';
 
     const script = this.renderer.createElement("script");
-    this.renderer.setProperty(script, "type", "text/javascript");
-    this.renderer.setProperty(script, "async", true);
+    //this.renderer.setProperty(script, "type", "text/javascript");
+    //this.renderer.setProperty(script, "async", true);
     this.renderer.setProperty(script, "src", s);
     this.renderer.appendChild(this.document.head, script);
 
