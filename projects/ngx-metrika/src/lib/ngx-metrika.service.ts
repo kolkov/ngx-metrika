@@ -5,6 +5,7 @@ import {filter, tap} from 'rxjs/operators';
 import {YM_CONFIG} from './ym.token';
 import {BehaviorSubject} from 'rxjs';
 import {DOCUMENT} from '@angular/common';
+import {DomSanitizer} from '@angular/platform-browser';
 
 declare var Ya: any;
 
@@ -32,6 +33,7 @@ export class NgxMetrikaService {
     @Inject(YM_CONFIG) ymConfig: NgxMetrikaConfig,
     private router: Router,
     rendererFactory: RendererFactory2,
+    private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private document: Document,
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
@@ -147,7 +149,7 @@ export class NgxMetrikaService {
     const s = document.createElement('script');
     s.type = 'text/javascript';
     s.async = true;
-    s.src = 'https://mc.yandex.ru/metrika/tag.js';
+    s.src = this.sanitizer.bypassSecurityTrustResourceUrl('https://mc.yandex.ru/metrika/tag.js').toString();
     const insetScriptTag = () => head.appendChild(s);
 
     if ((window as any).opera === '[object Opera]') {
