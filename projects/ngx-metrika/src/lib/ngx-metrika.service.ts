@@ -6,6 +6,7 @@ import {YM_CONFIG} from './ym.token';
 import {BehaviorSubject} from 'rxjs';
 import {DOCUMENT} from '@angular/common';
 import {DomSanitizer} from '@angular/platform-browser';
+import {scriptUrl, unwrapScriptUrlForSink} from 'safevalues';
 
 declare var Ya: any;
 
@@ -145,7 +146,7 @@ export class NgxMetrikaService {
       }
     });
 
-    const s = 'https://mc.yandex.ru/metrika/tag.js';
+    const s = unwrapScriptUrlForSink(scriptUrl`https://mc.yandex.ru/metrika/tag.js`);
 
     const script = this.renderer.createElement("script");
     //this.renderer.setProperty(script, "type", "text/javascript");
