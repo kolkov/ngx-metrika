@@ -94,7 +94,7 @@ this.ym.reachGoal.next({target: 'ADD_TO_CART', options});
 Many analytics events are tracked based on user interaction, such as button clicks. Just tell it which DOM event to track.  
 
 ```html
-<button ymGoal trackOn="click">Track Me</button>
+<button ymGoal trackOn="click" target="TRACKED">Track Me</button>
 ```
 
 This will register a general Target in Yandex Metrika based on the target name.
