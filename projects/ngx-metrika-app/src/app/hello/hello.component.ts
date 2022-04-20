@@ -12,4 +12,7 @@ export class HelloComponent implements OnInit {
   ngOnInit() {
   }
 
+  onClick() {
+    console.log("Button clicked");
+  }
 }
