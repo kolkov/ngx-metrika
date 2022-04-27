@@ -61,7 +61,9 @@ export class NgxMetrikaService {
           this.onHit(this.router.url, y.hitOptions);
         });
         this.reachGoal.subscribe((y: MetrikaGoalEventOptions) => {
-          this.onReachGoal(y.target, y.options);
+          if (y.target !== 'test') {
+            this.onReachGoal(y.target, y.options);
+          }
         });
       });
     if (config.trackPageViews) {
@@ -149,23 +151,8 @@ export class NgxMetrikaService {
     const s = unwrapScriptUrlForSink(scriptUrl`https://mc.yandex.ru/metrika/tag.js`);
 
     const script = this.renderer.createElement("script");
-    //this.renderer.setProperty(script, "type", "text/javascript");
-    //this.renderer.setProperty(script, "async", true);
     this.renderer.setProperty(script, "src", s);
     this.renderer.appendChild(this.document.head, script);
-
-/*    const head = this.document.getElementsByTagName('head')[0];
-    const s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.src = this.sanitizer.bypassSecurityTrustScript('https://mc.yandex.ru/metrika/tag.js').toString();
-    const insetScriptTag = () => head.appendChild(s);*/
-
-    /*if ((window as any).opera === '[object Opera]') {
-      this.renderer.listen('DOMContentLoaded', insetScriptTag, false);
-    } else {
-      insetScriptTag();
-    }*/
     return name;
   }
 }
