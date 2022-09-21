@@ -10,7 +10,8 @@ export class AppComponent {
   name = 'Angular 6+ Yandex Metrika';
 
   constructor(private ym: NgxMetrikaService) {
-    ym.debug = true;
-    ym.disable();
+    //ym.debug = true;
+    //ym.init = true;
+    //ym.disable();
   }
 }

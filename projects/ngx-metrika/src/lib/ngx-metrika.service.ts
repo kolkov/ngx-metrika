@@ -1,4 +1,4 @@
-import {EventEmitter, Inject, Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import {Inject, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {CommonOptions, MetrikaGoalEventOptions, MetrikaHitEventOptions, MetrikaHitOptions, NgxMetrikaConfig} from './interfaces';
 import {filter, tap} from 'rxjs/operators';
@@ -22,13 +22,14 @@ export class NgxMetrikaService {
   };
   config: NgxMetrikaConfig;
   debug = false;
+  init = false;
   previousUrl: string;
 
   private disabled: boolean;
   private renderer: Renderer2;
 
-  public hit = new EventEmitter<MetrikaHitEventOptions>();
-  public reachGoal = new BehaviorSubject<MetrikaGoalEventOptions>({target: 'test'});
+  public hit = new BehaviorSubject<MetrikaHitEventOptions>({url: '_TEST_'});
+  public reachGoal = new BehaviorSubject<MetrikaGoalEventOptions>({target: 'INIT'});
 
   constructor(
     @Inject(YM_CONFIG) ymConfig: NgxMetrikaConfig,
@@ -58,10 +59,12 @@ export class NgxMetrikaService {
     this.checkCounter(config.id)
       .then(() => {
         this.hit.subscribe((y: MetrikaHitEventOptions) => {
-          this.onHit(this.router.url, y.hitOptions);
+          if (y.url !== '_TEST_') {
+            this.onHit(this.router.url, y.hitOptions);
+          }
         });
         this.reachGoal.subscribe((y: MetrikaGoalEventOptions) => {
-          if (y.target !== 'test') {
+          if (y.target !== 'INIT' || this.init === true) {
             this.onReachGoal(y.target, y.options);
           }
         });
@@ -73,7 +76,7 @@ export class NgxMetrikaService {
           const options: MetrikaHitEventOptions = {
             url: this.router.url
           };
-          this.hit.emit(options);
+          this.hit.next(options);
           this.previousUrl = this.router.url;
         })
       ).subscribe();
@@ -107,13 +110,13 @@ export class NgxMetrikaService {
         referer: this.previousUrl
       };
       if (this.debug) {
-        console.log('Hit:', url, defaults, options);
+        console.log('Hit called:', url, defaults, options);
       }
       const ya = NgxMetrikaService.getCounterById(this.config.id);
       if (typeof ya !== 'undefined') {
         const optionsNew = Object.assign(defaults, options);
         if (this.debug) {
-          console.log('Hit:', url, optionsNew);
+          console.log('Hit fired:', url, optionsNew);
         }
         ya.hit(url, optionsNew);
       }
